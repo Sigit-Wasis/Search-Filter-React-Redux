@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 // import component search
 import Search from './Search';
-// import component search
-// import Chart from './Chart';
+// import axios
 // import connect from react-redux
 import {connect} from 'react-redux';
+import { getDataSearch } from './getDataSearch';
 
 class Filter extends Component {
 
@@ -12,14 +12,14 @@ class Filter extends Component {
         return (
             <Fragment>
                 <Search />
-                {/* <Chart /> */}
+                <button className="btn btn-primary btn-sm float-right" onClick={getDataSearch}>Cari</button>
             </Fragment>
         )
     }
 }
 
 function mapStateToProps(state) {
-    return {count: state.count};
+    return {dataFilter: state};
 }
 
 export default connect(mapStateToProps)(Filter); 

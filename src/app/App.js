@@ -13,7 +13,8 @@ const initialState = {
     id_kabupaten: null,
     id_kecamatan: null,
     id_kelurahan: null,
-    id_namapemohon: null
+    id_namapemohon: null,
+    data_pencarian: []
 }
 
 // reducer 
@@ -35,6 +36,8 @@ function reducer (state = initialState, action) {
             return {id_kelurahan: action.payload};
         case 'ID_NAMAPEMOHON':
             return {id_namapemohon: action.payload};
+        case 'HASIL_PENCARIAN':
+            return {data_pencarian: action.payload};
         default:
             return state;
     } 

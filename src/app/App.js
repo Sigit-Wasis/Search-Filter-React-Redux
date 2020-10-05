@@ -7,8 +7,8 @@ import Filter from './components/Filter';
 // Inisialisasi state
 const initialState = {
     totalData: '',
-    tanggal_mulai: '2020-10-03',
-    tanggal_akhir: '2020-10-03',
+    tanggal_mulai: null,
+    tanggal_akhir: null,
     id_provinsi: null,
     id_kabupaten: null,
     id_kecamatan: null,

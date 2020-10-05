@@ -8,36 +8,36 @@ import "react-datepicker/dist/react-datepicker.css";
 import {connect} from 'react-redux';
 
 class Search extends Component {
-    // constructor(props) {
-    //     super(props);
+    constructor(props) {
+        super(props);
 
-    //     this.state = {
-    //         startDate: null,
-    //         endDate: null,
-    //         ProvinsiId: '',
-    //         KabupatenId: '',
-    //         KecamatanId: '',
-    //         KelurahanId: '',
-    //         ProvinsiData: [],
-    //         KabupatenData: [],
-    //         KecamatanData: [],
-    //         KelurahanData: [],
-    //         NamaPemohon: []
-    //     };
+        this.state = {
+            // ProvinsiId: '',
+            // KabupatenId: '',
+            // KecamatanId: '',
+            // KelurahanId: '',
+            ProvinsiData: [],
+            KabupatenData: [],
+            KecamatanData: [],
+            KelurahanData: [],
+        };
 
-    //     // binding react js
-    //     this.setStartDate = this.setStartDate.bind(this);
-    //     this.setEndDate = this.setEndDate.bind(this);
-    //     this.setNamaPemohon = this.setNamaPemohon.bind(this);
-    // }
+        // binding react js
+        // this.setStartDate = this.setStartDate.bind(this);
+        // this.setEndDate = this.setEndDate.bind(this);
+        // this.setNamaPemohon = this.setNamaPemohon.bind(this);
+    }
 
     componentDidMount() {
         axios.get(`http://sakapi.microdataindonesia.co.id/wilayah/provinsi`)
         .then(response => {
-            this.props.dispatch({
-                type: 'ID_PROVINSI',
-                payload: response.data.id
+            this.setState({
+                ProvinsiData: response.data
             });
+            // this.props.dispatch({
+            //     type: 'ID_PROVINSI',
+            //     payload: response.data.id
+            // });
         })
         .catch(error => {
             console.warn(error);
@@ -45,9 +45,16 @@ class Search extends Component {
     }
 
     ChangeKabupaten = (e) => {  
-        this.setState({ ProvinsiId: e.target.value });  
-        axios.get('http://sakapi.microdataindonesia.co.id/wilayah/kabupaten/' + e.target.value )
+        // this.setState({ ProvinsiId: e.target.value });  
+        this.props.dispatch({  
+            type: 'ID_PROVINSI',
+            payload: e.target.value 
+        }); 
+        axios.get('http://sakapi.microdataindonesia.co.id/wilayah/kabupaten/' + this.props.dataPencarian.id_provinsi )
         .then((response) => {  
+            this.setState({
+                KabupatenData: response.data
+            });
             console.log(response.data)
             this.props.dispatch({  
                 type: 'ID_KABUPATEN',
@@ -63,6 +70,9 @@ class Search extends Component {
         this.setState({ KabupatenId: e.target.value });  
         axios.get('http://sakapi.microdataindonesia.co.id/wilayah/kecamatan/' + e.target.value)
         .then(response => {   
+            this.setState({
+                KecamatanData: response.data
+            });
             console.log(response.data)
             this.props.dispatch({  
                 type: 'ID_KECAMATAN',
@@ -78,6 +88,9 @@ class Search extends Component {
         this.setState({ KecamatanId: e.target.value });  
         axios.get('http://sakapi.microdataindonesia.co.id/wilayah/kelurahan/' + e.target.value)
         .then(response => {  
+            this.setState({
+                KelurahanData: response.data
+            });
             console.log(response.data)
             this.props.dispatch({  
                 type: 'ID_KELURAHAN',
@@ -190,7 +203,7 @@ class Search extends Component {
 }
 
 function mapStateToProps(state) {
-    return {datapencarian: state.datapencarian}
+    return {dataPencarian: state}
 }
 
 export default connect(mapStateToProps)(Search);

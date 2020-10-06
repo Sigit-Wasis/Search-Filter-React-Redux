@@ -1,10 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import Search from './Search';
-import Chart from './Chart';
+import {Bar} from 'react-chartjs-2';
+// import Chart from './Chart';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
 class Filter extends Component {
+    constructor(props) {
+        super(props);
+
+        /* state ini berisi data yang tidak diimport ke komponen lain
+        hanya menampung data dari lokasi hasil fetching data API */
+        this.state = {
+            HasilPencarian: []
+        }
+    }
    
     /* Fungsi yang digunakan untuk mengambil data dari API untuk ditampilkan ke dalam chart 
        aksi ini diambil dari onClick pada button Cari */
@@ -33,9 +43,37 @@ class Filter extends Component {
                     }
                 }
             ).then(response => {
-                this.props.dispatch({
-                    type: 'HASIL_PENCARIAN',
-                    payload: response.data
+                // this.setState({HasilPencarian: response.data});
+                // console.log(this.state.HasilPencarian)
+                // this.props.dispatch({
+                //     type: 'HASIL_PENCARIAN',
+                //     payload: response.data
+                // });
+                const football = response.data;
+                let playername = [];
+                let playerscore = [];
+                football.forEach(element => {
+                    playername.push(element.date);
+                    playerscore.push(element.count);
+                });
+                this.setState({ 
+                    HasilPencarian: {
+                    labels: playername,
+                    datasets:[
+                        {
+                            label:'Grafi Surat Izin Usah Mikro',
+                            data: playerscore ,
+                            backgroundColor:[
+                            'rgba(255,105,145,0.6)',
+                            'rgba(155,100,210,0.6)',
+                            'rgba(90,178,255,0.6)',
+                            'rgba(240,134,67,0.6)',
+                            'rgba(120,120,120,0.6)',
+                            'rgba(250,55,197,0.6)'
+                        ]
+                        }
+                    ]
+                }
                 });
             })
             .catch(error => {
@@ -53,8 +91,10 @@ class Filter extends Component {
                     <div className="card">
                         <Search />
                         <button className="btn btn-primary btn-sm" onClick={this.getDataSearch}>Cari</button>
-                        <br/><br/>
-                        <Chart />
+                        <br/>
+                        <Bar
+          data={this.state.HasilPencarian}/>
+                        {/* <Chart /> */}
                     </div>
                 </div>
             </Fragment>

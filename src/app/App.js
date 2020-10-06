@@ -4,9 +4,10 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import Filter from './components/Filter';
 
-// Inisialisasi state
+/* =========================================================================================
+// Inisialisasi state untuk menyimpan data yang diterima dari luar komponen.
+=========================================================================================== */
 const initialState = {
-    totalData: '',
     tanggal_mulai: null,
     tanggal_akhir: null,
     id_provinsi: null,
@@ -14,36 +15,52 @@ const initialState = {
     id_kecamatan: null,
     id_kelurahan: null,
     id_namapemohon: null,
-    data_pencarian: []
+    data_pencarian: []     // hasil dari pencarian data 
 }
 
-// reducer 
+/* =========================================================================================
+    ** REDUCER ** 
+    Reducer adalah sebuah function yang bertugas memproses Action dan bikin State baru. 
+    Reducer punya dua parameter state & action.
+    action.payload menerima data dari action dispatch yang ada pada file Search.js
+=========================================================================================== */
 function reducer (state = initialState, action) {
     switch(action.type) {
-        case 'TOTALDATA':
-            return {totalData: state.totalData};
         case 'TANGGAL_MULAI':
-            return {tanggal_mulai: action.payload};
+            state.tanggal_mulai = action.payload; 
+            return state;
         case 'TANGGAL_AKHIR':
-            return {tanggal_akhir: action.payload};
+            state.tanggal_akhir = action.payload;
+            return state;
         case 'ID_PROVINSI':
-            return {id_provinsi: action.payload};
+            state.id_provinsi = action.payload;
+            return state;
         case 'ID_KABUPATEN':
-            return {id_kabupaten: action.payload};
+            state.id_kabupaten = action.payload;
+            return state;
         case 'ID_KECAMATAN':
-            return {id_kecamatan: action.payload};
+            state.id_kecamatan = action.payload;
+            return state;
         case 'ID_KELURAHAN':
-            return {id_kelurahan: action.payload};
+            state.id_kelurahan = action.payload;
+            return state;
         case 'ID_NAMAPEMOHON':
-            return {id_namapemohon: action.payload};
+            state.id_namapemohon = action.payload;
+            return state;
         case 'HASIL_PENCARIAN':
-            return {data_pencarian: action.payload};
+            state.data_pencarian = action.payload;
+            return state;
         default:
             return state;
     } 
 }
 
-// store
+/* =========================================================================================
+    ** STORE ** 
+    Store adalah objek yang menghubungkan Action & Reducer. Pada intinya, objek ini bertugas:
+    Menyimpan State
+    Menyediakan API untuk mengakses State
+=========================================================================================== */
 const store = createStore(reducer);
 
 function App() {

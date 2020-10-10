@@ -111,6 +111,14 @@ class Search extends Component {
         }); 
     }  
 
+    /* method untuk mengambil data dari form input ID Kelurahan */
+    getKelurahan = (e) => {
+        this.props.dispatch({  
+            type: 'ID_KELURAHAN',       // type dari reducer
+            payload: e.target.value     // value dari form input
+        });
+    }
+
     /* method untuk mengambil data dari form input Nama Pemohon */
     setNamaPemohon = (p) => {
         /* Action dibawah ini mengirimkan value ke dalam Initial State yang ada di App.js */
@@ -210,7 +218,7 @@ class Search extends Component {
                     </div>
                     <div className="form-group col-md-3">
                         <label>Kelurahan</label>
-                        <select className="form-control slkl" name="kelurahan" disabled={this.state.KelurahanData.length < 1}>  
+                        <select className="form-control slkl" name="kelurahan" disabled={this.state.KelurahanData.length < 1} onChange={this.getKelurahan}>  
                             <option>Pilih Kelurahan</option>    
                                 {this.state.KelurahanData.map((e, key) => {  
                                     return <option key={key} value={e.id}>{e.instansi}</option>;  

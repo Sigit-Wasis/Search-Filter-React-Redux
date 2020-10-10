@@ -65,11 +65,12 @@ const store = createStore(reducer);
 
 function App() {
     return (
-        <div className="App">
-            <Provider store={store}>
-                <Filter/>
-            </Provider>
-        </div>
+
+            <div className="App">
+                <Provider store={store}>
+                    <Filter/>
+                </Provider>
+            </div>
     );
 }
 

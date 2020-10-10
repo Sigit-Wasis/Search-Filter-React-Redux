@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
+import Chart from './components/Chart'
 import Filter from './components/Filter';
 
 /* =========================================================================================
@@ -69,6 +70,8 @@ function App() {
             <div className="App">
                 <Provider store={store}>
                     <Filter/>
+                    <br/>
+                    <Chart />
                 </Provider>
             </div>
     );
